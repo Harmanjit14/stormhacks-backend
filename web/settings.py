@@ -29,6 +29,7 @@ DEBUG = os.environ.get("DEBUG", True)
 ALLOWED_HOSTS = ['*']
 
 CORS_ALLOW_ALL_ORIGINS: True
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
     'https://127.0.0.1',
@@ -84,6 +85,7 @@ GRAPHENE = {
     "SCHEMA": "web.schema.schema",
     "MIDDLEWARE": [
         "graphql_jwt.middleware.JSONWebTokenMiddleware",
+        "corsheaders.middleware.CorsMiddleware",
     ],
 }
 
