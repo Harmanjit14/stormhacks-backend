@@ -37,6 +37,7 @@ CORS_ORIGIN_WHITELIST = (
     'https://localhost:5501',
     'https://127.0.0.1:5500',
     'https://localhost:5500',
+    'https://fit-m1nd.web.app/'
 )
 
 CORS_ALLOW_METHODS = [
