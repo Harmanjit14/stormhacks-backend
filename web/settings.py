@@ -26,12 +26,17 @@ SECRET_KEY = str(os.environ.get('SECRET_KEY', 'TEST_KEY_HERE'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", True)
 
-ALLOWED_HOSTS = ['*', 'fit-mind.herokuapp.com']
+ALLOWED_HOSTS = ['*']
+
 CORS_ALLOW_ALL_ORIGINS: True
 
 CORS_ORIGIN_WHITELIST = (
     'https://127.0.0.1',
     'https://localhost',
+    'https://127.0.0.1:5501',
+    'https://localhost:5501',
+    'https://127.0.0.1:5500',
+    'https://localhost:5500',
 )
 
 CORS_ALLOW_METHODS = [
