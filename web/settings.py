@@ -61,6 +61,7 @@ CORS_ALLOW_HEADERS = [
     'Access-Control-Allow-Credentials',
     'Access-Control-Allow-Methods',
     'Access-Control-Allow-Header',
+    'Access-Control-Allow-Headers',
 ]
 
 
