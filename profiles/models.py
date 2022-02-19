@@ -32,7 +32,7 @@ class Profile(models.Model):
     high_score = models.IntegerField(
         default=0, blank=False, null=False, validators=[MinValueValidator(0)])
     game_lives = models.IntegerField(
-        default=0, blank=False, null=False, validators=[MinValueValidator(0)])
+        default=3, blank=False, null=False, validators=[MinValueValidator(0)])
     last_score = models.IntegerField(
         default=0, blank=False, null=False, validators=[MinValueValidator(0)])
 

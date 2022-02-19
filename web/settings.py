@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.environ.get('SECRET_KEY', 'TEST_KEY_HERE'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", True)
 
 ALLOWED_HOSTS = ['*', 'fit-mind.herokuapp.com']
 CORS_ALLOW_ALL_ORIGINS: True

@@ -47,102 +47,76 @@ class Query(graphene.ObjectType):
         return Profile.objects.get(user=u)
 
 
-# class CreateProfile(graphene.Mutation):
-#     user = graphene.Field(User_Object)
+class CreateUser(graphene.Mutation):
+    user = graphene.Field(User_Object)
 
-#     class Arguments:
-#         username = graphene.String(required=True)
-#         password = graphene.String(required=True)
-#         email = graphene.String(required=True)
-#         name = graphene.String(required=True)
-#         gender = graphene.String(required=True)
-#         city = graphene.String()
-#         state = graphene.String()
-#         country = graphene.String()
+    class Arguments:
+        username = graphene.String(required=True)
+        password = graphene.String(required=True)
+        email = graphene.String(required=True)
+        name = graphene.String(required=True)
+        age = graphene.Int(required=True)
+        gender = graphene.String(required=True)
+        city = graphene.String()
+        state = graphene.String()
+        country = graphene.String()
 
-#     def mutate(self, info, username, password, email, **kwargs):
-#         user = get_user_model()(
-#             username=username,
-#             email=email,
-#         )
-#         user.set_password(password)
-#         user.save()
-#         img = kwargs.get("image")
-#         gen = kwargs.get("gender")
+    def mutate(self, info, username, password, email, name, age, gender, **kwargs):
+        user = get_user_model()(
+            username=username,
+            email=email,
+        )
+        user.set_password(password)
+        user.save()
 
-#         if img is None:
-#             profile = Profile.objects.create(user=user, name=kwargs.get(
-#                 "name"), gender=gen, city=kwargs.get("city"), state=kwargs.get("state"), country=kwargs.get("country"))
-#             profile.save()
-#         else:
-#             profile = Profile.objects.create(user=user, name=kwargs.get(
-#                 "name"), image=img, gender=gen, city=kwargs.get("city"), state=kwargs.get("state"), country=kwargs.get("country"))
-#             profile.save()
+        city = kwargs.get('city')
+        state = kwargs.get('state')
+        country = kwargs.get('country')
 
-#         return CreateProfile(user=user)
+        profile = Profile.objects.create(
+            user=user, name=name, age=age, gender=gender, city=city, state=state, country=country)
+        profile.save()
+
+        return CreateUser(user=user)
 
 
-# class UpdateUser(graphene.Mutation):
-#     update = graphene.Field(Profile)
+class UpdateScore(graphene.Mutation):
+    update = graphene.Field(Profile_Object)
 
-#     class Arguments:
-#         name = graphene.String(required=False)
-#         image = graphene.String(required=False)
-#         gender = graphene.String(required=False)
-#         city = graphene.String(required=False)
-#         state = graphene.String(required=False)
-#         country = graphene.String(required=False)
+    class Arguments:
+        score = graphene.Int(required=True)
 
-#     def mutate(self, info, **kwargs):
+    def mutate(self, info, score, **kwargs):
 
-#         user = info.context.user
+        user = info.context.user
 
-#         if user.is_anonymous:
-#             raise GraphQLError("Not Logged In!")
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
 
-#         profile = Profile.objects.get(user=user)
+        profile = Profile.objects.get(user=user)
+        profile.last_score = score
+        profile.high_score = max(score, profile.high_score)
+        profile.save()
 
-#         name = kwargs.get("name")
-#         image = kwargs.get("image")
-#         gender = kwargs.get("gender")
-#         city = kwargs.get("city")
-#         state = kwargs.get("state")
-#         country = kwargs.get("country")
-
-#         if image is not None:
-#             profile.image = image
-#         if gender is not None:
-#             profile.gender = gender
-#         if name is not None:
-#             profile.name = name
-#         if city is not None:
-#             profile.city = city
-#         if state is not None:
-#             profile.state = state
-#         if country is not None:
-#             profile.country = country
-
-#         profile.save()
-
-#         return UpdateUser(update=profile)
+        return UpdateScore(update=profile)
 
 
-# class DeleteUser(graphene.Mutation):
-#     user = graphene.String()
+class DeleteUser(graphene.Mutation):
+    user = graphene.String()
 
-#     def mutate(self, info):
-#         user = info.context.user
+    def mutate(self, info):
+        user = info.context.user
 
-#         if user.is_anonymous:
-#             raise GraphQLError("Not Logged In!")
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
 
-#         user.delete()
-#         str = "Done!"
+        user.delete()
+        str = "Done!"
 
-#         return DeleteUser(user=str)
+        return DeleteUser(user=str)
 
 
-# class Mutation(graphene.ObjectType):
-#     create_user = CreateUser.Field()
-#     update_user = UpdateUser.Field()
-#     delete_user = DeleteUser.Field()
+class Mutation(graphene.ObjectType):
+    create_user = CreateUser.Field()
+    update_user = UpdateScore.Field()
+    delete_user = DeleteUser.Field()
