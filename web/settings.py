@@ -33,11 +33,7 @@ CORS_ALLOW_ALL_ORIGINS: True
 CORS_ORIGIN_WHITELIST = (
     'https://127.0.0.1',
     'https://localhost',
-    'https://127.0.0.1:5501',
-    'https://localhost:5501',
-    'https://127.0.0.1:5500',
-    'https://localhost:5500',
-    'https://fit-m1nd.web.app/'
+    'https://fit-m1nd.web.app'
 )
 
 CORS_ALLOW_METHODS = [
@@ -59,6 +55,12 @@ CORS_ALLOW_HEADERS = [
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+    'Access-Control-Allow-Origin',
+    'Access-Control-Expose-Headers',
+    'Access-Control-Max-Age',
+    'Access-Control-Allow-Credentials',
+    'Access-Control-Allow-Methods',
+    'Access-Control-Allow-Header',
 ]
 
 
