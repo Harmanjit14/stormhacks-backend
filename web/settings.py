@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     "corsheaders",
+    'health_tests',
     'profiles',
 ]
 
