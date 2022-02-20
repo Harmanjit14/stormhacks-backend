@@ -13,7 +13,7 @@ class UserMood(models.Model):
         primary_key=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              null=False, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     # Mood data
     mood_score = models.IntegerField(default=1, validators=[
