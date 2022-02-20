@@ -101,6 +101,26 @@ class UpdateScore(graphene.Mutation):
         return UpdateScore(update=profile)
 
 
+class UpdateLife(graphene.Mutation):
+    update = graphene.Field(Profile_Object)
+
+    class Arguments:
+        life = graphene.Int(required=True)
+
+    def mutate(self, info, life, **kwargs):
+
+        user = info.context.user
+
+        if user.is_anonymous:
+            raise GraphQLError("Not Logged In!")
+
+        profile = Profile.objects.get(user=user)
+        profile.game_lives = life
+        profile.save()
+
+        return UpdateScore(update=profile)
+
+
 class DeleteUser(graphene.Mutation):
     user = graphene.String()
 
@@ -118,5 +138,5 @@ class DeleteUser(graphene.Mutation):
 
 class Mutation(graphene.ObjectType):
     create_user = CreateUser.Field()
-    update_user = UpdateScore.Field()
+    update_score = UpdateScore.Field()
     delete_user = DeleteUser.Field()
